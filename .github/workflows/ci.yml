@@ -34,7 +34,9 @@ jobs:
 
       # Runs a PowerShell script to set a value in version.yml  
       - name: Set value
-        run: .\setValue.ps1 -FilePath .\version.yml -Key version -Value "${{ github.event.inputs.value }}"
+        run: |
+          Install-Module powershell-yaml -Force -Scope CurrentUser
+          .\setValue.ps1 -FilePath .\version.yml -Key version -Value "${{ github.event.inputs.value }}"
         shell: pwsh
 
       # Commit changes if any
