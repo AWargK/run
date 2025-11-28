@@ -32,8 +32,17 @@ jobs:
       - name: Show value input
         run: echo "Input 'value' = '${{ github.event.inputs.value }}'"
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      # Runs a PowerShell script to set a value in version.yml  
+      - name: Set value
+        run: .\setValue.ps1 -FilePath .\version.yml -Key version -Value "${{ github.event.inputs.value }}"
+
+      # Commit changes if any
+      - name: Commit changes
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add version.yml
+          git diff --cached --quiet || git commit -m "Update version.yml with new value"
+          git status
+          git push origin ${{ github.ref }}
+      
