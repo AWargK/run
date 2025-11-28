@@ -57,6 +57,4 @@ jobs:
           git diff --cached --quiet || git commit -m "Update version.yml with new value"
           git status
           git push origin HEAD:${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
