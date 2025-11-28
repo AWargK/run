@@ -30,8 +30,7 @@ jobs:
         with:
           # ensure the action can push using the workflow's token
           persist-credentials: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-
+          
       # Runs a single command using the runners shell
       - name: Run a one-line script
         run: echo Hello, world!
