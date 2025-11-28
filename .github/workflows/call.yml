@@ -32,6 +32,7 @@ jobs:
           repository: AWargK/run
           # ensure the action can push using the workflow's token
           persist-credentials: true
+          token: ${{ secrets.RUN_REPO_PAT }}
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
