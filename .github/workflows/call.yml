@@ -29,6 +29,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
         with:
+          repository: AWargK/run
           # ensure the action can push using the workflow's token
           persist-credentials: true
 
