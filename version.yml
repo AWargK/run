@@ -1,5 +1,5 @@
-version: 1.0.2
 nested:
-  key: value
+  key: test
 nested.key: test
+version: test
 
