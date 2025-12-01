@@ -1,4 +1,4 @@
+version: "1.0"
 nested:
-  key: test
-version: test
+  key: "1.0"
 
