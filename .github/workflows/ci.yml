@@ -43,6 +43,7 @@ jobs:
       - name: Set value
         run: |
           Install-Module powershell-yaml -Force -Scope CurrentUser
+          .\setValue.ps1 -FilePath .\version.yml -Key version -Value "${{ github.event.inputs.value }}"
           .\setValue.ps1 -FilePath .\version.yml -Key nested.key -Value "${{ github.event.inputs.value }}"
           Get-Content .\version.yml
         shell: pwsh

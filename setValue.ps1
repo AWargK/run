@@ -10,13 +10,20 @@ param (
     [string]$FilePath
 )
 
-# Read the existing YAML file
 $yamlContent = Get-Content -Path $FilePath -Raw
 $yaml = $yamlContent | ConvertFrom-Yaml
-# Set the new value
-$yaml.$Key = $Value
-# Convert back to YAML format
-$updatedYamlContent = $yaml | ConvertTo-Yaml
 
-# Save the updated YAML content back to the file
+# Set the new value, supporting nested keys using dot notation
+$keys = $Key -split "\."
+$yamlCurrent = $yaml
+for ($i = 0; $i -lt $keys.Length - 1; $i++) {
+    $k = $keys[$i]
+    if (-not $yamlCurrent.ContainsKey($k)) {
+        $yamlCurrent[$k] = @{}
+    }
+    $yamlCurrent = $yamlCurrent[$k]
+}
+$yamlCurrent[$keys[-1]] = $Value
+
+$updatedYamlContent = $yaml | ConvertTo-Yaml
 Set-Content -Path $FilePath -Value $updatedYamlContent
