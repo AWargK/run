@@ -5,6 +5,7 @@ name: CI Self
 # Give the workflow permission to push commits using GITHUB_TOKEN
 permissions:
   contents: write
+  actions: write
 
 env:
   version: ''
