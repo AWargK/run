@@ -5,7 +5,6 @@ name: CI Self
 # Give the workflow permission to push commits using GITHUB_TOKEN
 permissions:
   contents: write
-  actions: write
 
 env:
   version: ''
@@ -34,6 +33,7 @@ jobs:
         with:
           # ensure the action can push using the workflow's token
           persist-credentials: true
+          token: ${{ secrets.RUN_REPO_PAT }}
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
