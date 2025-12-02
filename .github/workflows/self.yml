@@ -1,29 +1,33 @@
+env:
+  version: testtest
+permissions:
+  contents: write
 "on":
   workflow_dispatch:
     inputs:
       value:
         required: false
-        default: ""
         description: value
+        default: ""
+name: CI Self
 jobs:
   build:
     steps:
-    - with:
-        persist-credentials: true
+    - uses: actions/checkout@v4
+      with:
         token: ${{ secrets.RUN_REPO_PAT }}
-      uses: actions/checkout@v4
-    - name: Run a one-line script
-      run: echo Hello, world!
-    - name: Show value input
-      run: echo "Input 'value' = '${{ github.event.inputs.value }}'"
-    - name: Set value
-      run: |
+        persist-credentials: true
+    - run: echo Hello, world!
+      name: Run a one-line script
+    - run: echo "Input 'value' = '${{ github.event.inputs.value }}'"
+      name: Show value input
+    - run: |
         Install-Module powershell-yaml -Force -Scope CurrentUser
         .\setValue.ps1 -FilePath .\.github\workflows\self.yml -Key env.version -Value "${{ github.event.inputs.value }}"
         Get-Content .\.github\workflows\self.yml
       shell: pwsh
-    - name: Commit changes
-      run: |
+      name: Set value
+    - run: |
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
@@ -31,10 +35,6 @@ jobs:
         git diff --cached --quiet || git commit -m "[ci] Update self.yml with new value '${{ github.event.inputs.value }}' (triggered by ${{ github.actor }})"
         git status
         git push origin HEAD:${{ github.ref_name }}
+      name: Commit changes
     runs-on: ubuntu-latest
-permissions:
-  contents: write
-name: CI Self
-env:
-  version: test
 
