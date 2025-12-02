@@ -56,8 +56,8 @@ jobs:
           git config --global user.name "${{ github.actor }}"
           git config --global user.email "${{ github.actor }}@users.noreply.github.com"
 
-          git add version.yml
-          git diff --cached --quiet || git commit -m "[ci] Update version.yml with new value '${{ github.event.inputs.value }}' (triggered by ${{ github.actor }})"
+          git add .github/workflows/self.yml
+          git diff --cached --quiet || git commit -m "[ci] Update self.yml with new value '${{ github.event.inputs.value }}' (triggered by ${{ github.actor }})"
           git status
           git push origin HEAD:${{ github.ref_name }}
       
