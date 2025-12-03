@@ -11,14 +11,14 @@ param (
 )
 
 $yamlContent = Get-Content -Path $FilePath -Raw
-$yaml = $yamlContent | ConvertFrom-Yaml
+$yaml = $yamlContent | ConvertFrom-Yaml -Ordered
 
 # Set the new value, supporting nested keys using dot notation
 $keys = $Key -split "\."
 $yamlCurrent = $yaml
 for ($i = 0; $i -lt $keys.Length - 1; $i++) {
     $k = $keys[$i]
-    if (-not $yamlCurrent.ContainsKey($k)) {
+    if (-not $yamlCurrent.Contains($k)) {
         $yamlCurrent[$k] = @{}
     }
     $yamlCurrent = $yamlCurrent[$k]
